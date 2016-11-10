@@ -20,6 +20,22 @@
 
 ###3. Model-Driven Design
 
+**Entities**
+
+  + There is a category of objects which seem to have an identity, which remain the same throughout the states of the software. For these objects it is not the attributes which matter, but a thread of continuity and identity, which spans the life of a system and can extend beyond it. Such objects are called `Entities`.
+  + OOP objects have a reference of a memory address for each object, this reference is nunique for each object at a given moment of time, but it will not stay so for an indefinite period of time, so it is not the identity we are talking about. These objects are not entities.
+  + Mistaken identity can lead to data corruption. It is importang for two objects with different identities to be easily distinguished by the system, and two objects with the same identity to be considered the same by the system. If that condition is not met, then the entire system can become corrupted.
+  + Implementing entities in software means creating identity. Usually the idenity is either an attribute of the object, a combination of attributes, an attribute specially created to preserve and express identity, or even a behavior.
+  + `Entities` are important objects of a domain model, and they should be considered from the beginning of the modeling process. It is also important to determine if an object needs to be an entity or not.
+
+**Value Objects**
+
+  + Tracking and creating identity comes with a cost. It is difficult and takes a lot of careful thinking to decide what makes an identity. There are also performance issue.
+  + There are cases when we need to contain some attributes of a domain element. We are not interested in which object it is, but what attribute it has. An object that is used to describe sertain aspects of a domain, and which does not have identity, is named `Value Object`.
+  + It is necessary to distinguish between `Entity Objects` and `Value Objects`. It is recommended to select as entities only those objects which conform to the entity definition, and make the rest of the objects `Value Objects`.
+  + It is highly recommended that value objects be immutable. Being immutable, and having no identity, `Value Objects` can be shared. Immutable objects are sharable with important performance implications. They also manifest integrity, i.e. data integrity. If there is no identity, you can make as many copies as you wish, and destroy all of them when necessary.
+  + `Values Objects` can contain other `Value Objects`, and they can even contain references to `Entities`. Attributes chosen to make up a `Value Object` should form a conceptual whole.
+
 ###4. Refactoring Toward Deeper Inside
 
 ###5. Preserving Model Integrity
