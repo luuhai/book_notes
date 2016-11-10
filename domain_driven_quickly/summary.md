@@ -88,6 +88,16 @@
 
   + `Factories` need to create new objects from scratch, or required to reconstitute objects which previously existed, but have been probably persisted to a database. Bringing `Entities` back into memory from the database does not need new identities. Also, when a new object if created from scratch, any violation of invariants ends up in an exception. The objects recreated from a database need to be repaired somehow, otherwise there is data loss.
 
+**Repositories**
+
+  + A client needs a practical means of acquiring references to preexisting domain objects. If the infrastructure makes it easy to do so, the developers of the client may add more traversable associations, muddling the model. The overall effect is that the domain focus id lost and the design is compromised.
+  + Therefore, use a `Repository`, the purpose of which is to encapsulate all the logic needed to obtain object references.
+  + The `Repository` may store references to some of the objects. When an object is created, it may be saved in the `Repository`, and retrieved from there to be used later. If the client requested an object that `Repository` does not have, it may get it from the storage.
+  + The `Repository` may also include a `Strategy`. It may access one persistence storage or another based on the specified `Strategy`. It may use different storage locations for different type of objects. The overall effect is that the domain model is decoupled from the need of storing objects or their references, and accessing the underlying persistence infrastructure.
+  + Provide methods to add and remove objects, which will encapsulate the actual insertion or removal of data in the data store. Provide methods that select objects based on some criteria and return fully instantiated objects or collecions of objects whose attribute values meet the criteria, thereby sncapsualting the actual storage and query technology. Provide repositories only for `Aggregate` roots that actually need direct access. Keep the client focused on the model, delegating all object storage and access to the `Repositories`.
+  + A `Repository` may contain detailed information used to access the infrastructure, but its interface should be simple. A `Repository` should have a set of methods used to retrieve objects. The `Repository` interface may contain methods used to perform some supplementary calculations like the number of objects of a certain type.
+  + There is a relationship between `Factory` and `Repository`. While the `Factory` is concerned with the creation of objects, the `Repository` takes care of already existing objects. `Repository` may be seen as a `Factory`, because it creates objects. It is not a creation from scratch, but a reconstitution of an object which existed. We should not mix a `Repository` with a `Factory`. When a new object is to be added to the `Repository`, it should be created first using the `Factory`, and then it should be given to the `Repository` which will store it. `Factories` are pure domain, but `Repositories` can contain links to the infrastructure.
+
 ###4. Refactoring Toward Deeper Inside
 
 ###5. Preserving Model Integrity
