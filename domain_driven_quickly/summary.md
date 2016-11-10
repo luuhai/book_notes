@@ -36,6 +36,29 @@
   + It is highly recommended that value objects be immutable. Being immutable, and having no identity, `Value Objects` can be shared. Immutable objects are sharable with important performance implications. They also manifest integrity, i.e. data integrity. If there is no identity, you can make as many copies as you wish, and destroy all of them when necessary.
   + `Values Objects` can contain other `Value Objects`, and they can even contain references to `Entities`. Attributes chosen to make up a `Value Object` should form a conceptual whole.
 
+**Services**
+
+  + There are some actions in the domain which do not seem to belongs to any object. They represent an important behavior of the domain, so they can not be neglected or simply incorporated into some of the `Entities` or `Value Objects`. Adding such behavior to an object wuold spoil the object, making it stand for functionality which does not belong to it. Often this kind of behavior functions across several objects, perhaps of different classes.
+  + When such a behavior is recognized in the domain, the best practice is to declare it as a `Service`. Such an object doas not have an internal state, and its purpose is to simply provide functionality for the domain. It is much better to declare the `Service` explicitly, because it creates a clear distinction in the domain, it encapsulates a concept.
+  + `Services` act as interfaces which provide operations. A `Service` is not about the object performing the service, but is related to the objects the operations are performed on/form, so it usually becomes a point of connection for many objects. This is one of the reasons why behavior which naturally belongs to a `Service` should not be included into domain objects, or else it will cause a high degree of coupling between many objects, which is a sign of poor design.
+  + A `Service` should not replace the operation which normally belongs on domain objects. But when such an operation stands out as an important concept in the domain, a `Service` should be created for it. There are three characteristics of a `Service`:
+
+    1. The operation performed by the `Service` refers to a domain concept which does not naturally belong to an `Entity` or `Value Object`.
+    2. The operation performed refers to other objects in the domain.
+    3. The operation is stateless.
+
+  + While using `Services`, it is important to keep the domain layer isolated. It is easy to get confused between services which belong to the domain layer, and those belonging to the infrastructure. There can also be services in the application layer which adds a supplementary level of complexity.
+  + Both application and domain `Services` are usually built on top of domain `Entities` and `Values` providing required functionality directly related to those objects. If the operation performed conceptually belongs to the application layer, then the `Service` should be placed there. If the operation is about domain need, then it should belongs to the domain layer.
+
+**Modules**
+
+  + For a large and complex application, the model tends to grow bigger and bigger. The model reaches a point where it is hard to talk about as a whole, and understanding the relationships and interactions between different parts becomes difficult. For that reason, `Modules` are used as a method of organizing related concepts and tasks in order to reduce complexity.
+  + It is easier to get the picture of a large model if you look at the modules it contains, then at the relationships between those modules. After that one can start figuring out the details inside of a module.
+  + Software code should have a high level of cohesion and a low level of coupling. It is recommended to group highly related classes into modules to provide maximum cohesion possible. Two of the most used types of cohesion are `communicaional cohesion` and `functional cohesion`. Communcational cohesion is achieved when parts of the module operate on the same data. The functional cohesion is achieved when all parts of the module work together to perform a well-defined task. This is considered the best type of cohesion.
+  + Modules should have well defined interfaces which are accessed by other modules. Instead of calling three objects of a module, it is better to access one interface, because it reduces coupling. Low coupling reduces complexity, and increases mantainability.
+  + Give the `Modules` names that become part of the `Ubiquitous Language`. `Modules` and their names should reflect insight into the domain.
+  + After the role of the module is decided, it usually stays unchanged, while the internals of the module may change a lot. It is recommended to have some flexibility, and allow the modules to evolve with the project, and should not be kept frozen.
+
 ###4. Refactoring Toward Deeper Inside
 
 ###5. Preserving Model Integrity
