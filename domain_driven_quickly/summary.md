@@ -59,6 +59,35 @@
   + Give the `Modules` names that become part of the `Ubiquitous Language`. `Modules` and their names should reflect insight into the domain.
   + After the role of the module is decided, it usually stays unchanged, while the internals of the module may change a lot. It is recommended to have some flexibility, and allow the modules to evolve with the project, and should not be kept frozen.
 
+**Aggregates**
+
+  + `Aggregate` is a domain pattern used to define object ownership and boundaries.
+  + A model can contain a large number of domain objects. It happens that many objects are associated with one another, creating a complex net of relationships. The challenges of models are most often not to make them complete enough, but rather to make them as simple and understandable as possible. Most of the time it pays of to eliminate or simplify relations from the model. It is difficult to guarantee the consistency of changes to objects in a model with complex associations.
+  + Therefore, use `Aggregates`. An `Aggragate` is a group of associated objects which are considered as one unit with regard to data changes. The `Aggregate` is demarcated by a boundary which separates the objects inside from those outside. Each `Aggregate` has one root. The root is an `Entity`, and it is the only object accessible from outside. The root can hold references to any of the aggregate objects, and the other objects can hold references to each other, but an outside object can hold references only to the root object.
+  + Since other objects can hold references only to the root, it means that they can not directly change the other objects in the aggregate. All operations are contained inside the aggregate, and it is controllable. If the root is deleted and removed from memory, all the other objects from the aggregate will be deleted too. It is simple to enforce invariants (which are those rules which have to be maintained whenever data changes) be cause the root will do that.
+  + It is possible for the root to pass transient references of internal objects to external ones, with the condition that the external objects do not hold the reference after the operation is finished. One simple way to do that is to pass copies of the `Value Objects` to external objects.
+  + If objects of an `Aggregate` are stored in a database, only the root should be obtainable through queries. The other objects should be obtained through traversal associations.
+  + Objects inside an `Aggregate` should be allowed to hold references to roots of other `Aggregates`.
+  + The root `Entity` has global identity. Internal `Entities` have local identity.
+
+**Factories**
+
+  + `Entities` and `Aggregates` can often be large and too complex to create in the constructor of the root entity. Creation of an object can be a major operation in itself, but complex assembly operations do not fit the responsibility of the created objects. Combining such responsibilities can produce ungainly designs that are hard to understand.
+  + `Factories` are used to encapsulate the knowledge necessary for object creation, and they are especially useful to create `Aggregates`. When the root of the `Aggregate` is created, all the objects inside are created with it, and all the invariants are enforced.
+  + It is important for the creation process to be atomic. If it is not, there is a chance for the creation process to be half done for some objects, leaving them in an undefined state. This is even more true for `Aggregates`. If an object cannot be created properly, an exception should be raised, making sure that an invalid value is not returned.
+  + Therefore, shift the responsibility for creating instances of complex objects and Aggregates to a separates object, which may itself have no responsibility in the domain model but is still part of the domain design. Provide an interface that encapsulates all complex assembly and that does not require the client to reference the concrete classes of the objects being instantiated. Create entire `Aggregates` as a unit, enforcing their invariants.
+  + A `Factory Method` is an object method which contains and hides knowledge necessary to create another object. To create an object which belongs to an `Aggregate`, the solution is to add a method to the `Aggregate` root, which takes care of the object creation, enforces all invariants, and returns a reference to that object, or to a copy of it.
+  + There are times when the construction of an object is more complex, or when the creation of an object involves the creation of a series of objects. Hiding the internal construction can be done in a separate `Factory` object which is dedicated to his task.
+  + `Entity Factories` and `Value Object Factories` are different. Values are usually immutable objects, and all the necessary attributes need to be produces at the time of creation. When the object is created, it has to be valid and final. Entities are not immutable. They can be changed later. Another difference comes from the fact that `Entities` need identity, while `Value Objects` do not.
+  + There are times when a `Factory` is not needed, and a simple constructor is enough:
+
+    1. The construction is not complicated.
+    2. The creation of an object does not involve the creation of others, and all the attributes needed are passed via the constructor.
+    3. The client is interested in the implementation, perhaps wants to choose the Strategy used.
+    4. The class is the type. There is no hierarchy involved, so no need to choose between a list of concrete implementations.
+
+  + `Factories` need to create new objects from scratch, or required to reconstitute objects which previously existed, but have been probably persisted to a database. Bringing `Entities` back into memory from the database does not need new identities. Also, when a new object if created from scratch, any violation of invariants ends up in an exception. The objects recreated from a database need to be repaired somehow, otherwise there is data loss.
+
 ###4. Refactoring Toward Deeper Inside
 
 ###5. Preserving Model Integrity
