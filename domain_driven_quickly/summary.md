@@ -100,5 +100,22 @@
 
 ###4. Refactoring Toward Deeper Inside
 
+**Continuous Refactoring**
+
+  + `Refactoring` is the process of redesigning the code to make it better without changing application behavior. Refactoring is usually done in small, controllable steps, with great care so we don't break functionality or introduce some bugs. Automated tests are of great help to ensure that we haven't broken anything.
+  + There are refactoring patterns, which represent an automated approach to refactoring. This kind of refactoring, which called technical refactoring, deals more with the code and its quality.
+  + There is another type of refactoring, one related to the domain and its model. Every things that is discovered should be included in the design through refactoring. It is very important to have expressive code that is easy to read and understand.
+  + Technical refactoring can be organized and structured. Refactoring toward deeper insight cannot be done in the same way, because of the complexity of a model and the variety of models. A good models is the result of deep thinking, insight, experience and flair.
+  + All models are lacking depth in the beginning, but we should refactor the model toward deeper and deeper insight.
+  + The design has to be flexible. A stiff design resists refactoring.
+  + Refactoring can be motivated by an insight into the domain and a corresponding refinement of the model or its expression in code.
+
+**Bring Key Concepts Into Light**
+
+  + Refactoring is done in small steps. There are times when lots of small changes add very little value to the design, and there are times when few changes make a lot of difference. It's a `Breakthrough`.
+  + We start with a coarse, shallow model. Then we refine it and the design based on deeper knowledge about the domain. Each refinement adds more clarity to the deisgn. This creates in turn the premises for a `Breakthrough`.
+  + A `Breakthrough` often involves a change in thinking, in the way we see the model. It is also a source of great progress in the project, but it also has some drawbacks. A `Breakthrough` may imply a large amount of refactoring, that means time and resources. It is also risky, because ample refactoring may introduce behavioral changes in the application.
+  + To reach a `Breakthrough`, we need to make the implicit concepts explicit.
+
 ###5. Preserving Model Integrity
 
