@@ -126,3 +126,32 @@
 
 ###5. Preserving Model Integrity
 
+* When multiple teams work on a project, code development is done in parallel, each team being assigned a specific part of the model. It it easy to start form a good mdoel and progress toward an inconsistent one, as nobody takes the time to fully understand the entire model.
+* The internal consistency of a model is called `unification`. When the design of the model evolves partially independently, we are facing the possibility to lose model integrity. Preserving the model integrity by striving to maintain one large unified model for the entire enterprise project is not going to work. The solution is we should conciously divide it into several models. Several models well integrated can evolve independently as long as they obey the contract they are cound to. Each model should have a clearly delimited border, and the relationships between models should be defined with precision.
+
+**Bounded Context**
+
+  + Each model has a context. When we deal with a single model, the model is implicit. But when we work on a large enterprise application, we need to define the context for each model we create.
+  + A model should be small enough to be assigned to one team. The context of a model is the set of conditions which need to be applied to make sure that the terms used in the model have s specific meaning.
+  + The main idea is to defined the scope of a model, to draw up boundaries of its context, then do the most possible to keep the model unified. Explicitly define the context within which a model applies. Explicitly set boundaries in terms of team organization, usage within specific parts of the application, and physical manifestations such as code bases and database schemas. Keep the model strictly consistent within these bounds, but don't be distracted or confused by issues outside.
+  + A `Bounded Context` is not a `Module`. A `Bounded Context` provides the logical frame inside of which the model evolves. `Modules` are used to organize the elements of a models, so `Bounded Context` encompasses the `Module`.
+  + When different teams have to work on the same model, we have to be aware that changes to the model may break existing functionality. When using multiple models, everybody can work freely on their own piece. Each model can support refactoring much easier, without repercussions on other models. The design can be refined and distilled in order to achieve maximum purity.
+  + We need to define the borders and the relationships between different models. This requires extra work and design effort, and there will perhaps some translations between different models.
+
+**Continuous Integration**
+
+**Context Map**
+
+**Shared Kernel**
+
+**Customer-Supplier**
+
+**Conformist**
+
+**Anticorruption Layer**
+
+**Separate Ways**
+
+**Open Host Serveice**
+
+**Distillation**
