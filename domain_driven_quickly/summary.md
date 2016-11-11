@@ -152,6 +152,10 @@
 
 **Shared Kernel**
 
+  + Uncoordinated teams working on closely related applications my produce results that not fit together. They can spending more on translation layers and retrofitting than they would spend on `Continuous Integration` in the first place, meanwhile duplicating effort and losing the benefits of a common `Ubiquitous Languague`.
+  + Therefore, designate some subset of the domain model that the two teams agree to share, includes the subset of code or of the database design associated with that part of model. Integrate a functional system frequently, but less often than the pace of `Continuous Integration` within the teams. During these integrations run the tests of both teams.
+  + The purpose of the `Shared Kernel` is to reduce duplication but still keep two separate contexts. If the teams use separate copies of the kernel code, they have to merge the code as soon as possible, at least weekly. A test suite should be in place. Any change of the kernel should be communicated to another team.
+
 **Customer-Supplier**
 
 **Conformist**
