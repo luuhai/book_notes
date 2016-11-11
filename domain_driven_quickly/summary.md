@@ -140,7 +140,15 @@
 
 **Continuous Integration**
 
+  + Even when a team works in a `Bounded Context` there is room for error. If one does not understand the relationships between objects, they may modify the code in such a way that comes in contradiction with the original intent.
+  + A model is not fully defined from the beginning. It evolves continuously based on new insight in the domain and feedback from the development process. That's why `Continuous Integration` is a necessary process within a `Bounded Context`. We need a process of integration to make sure that all the new elements which are added fit harmoniously into the rest of the model, and are implemented correctly in code. The sooner we merge the code the better. Another necessary requirement is to perform automated tests. The code can be changed to fix the reported errors, because they are caught early, and the merge, build, test process is started again.
+  + `Continuous Integration` applies to a `Bounded Context`, it is not used to deal with relationships between neighboting `Contexts`.
+
 **Context Map**
+
+  + While every team works on its model, it is good for everyone to have an idea of the overall picture. A `Context Map` is a document which outlines the different `Bounded Contexts` and the relationships between them.
+  + In the end the pieces have to be assembled together, and the entire system must work properly. If the contexts are not clearly defined, it is possible they will overlap each other. If the relationships between contexts are not outlined, there is a chance they won't work when the system is integrated.
+  + Each `Bounded Context` should have a name which should be part of the `Ubiquitous Language`. Everyone should know the boundaries of each context and the mapping between contexts and code. A common practice is to define the contexts, then create modules for each context, and use a naming convention to indicate the context each module belongs to.
 
 **Shared Kernel**
 
@@ -152,6 +160,13 @@
 
 **Separate Ways**
 
-**Open Host Serveice**
+  + If we reach the conclusion that integration is more trouble than it is worth, then we should go the `Separate Ways`.
+  + The `Separate Ways` pattern addresses the case when an enterprise application can be made up of several smaller applications which have little or nothing in common from a modeling perspective. There is a single set of requirements, and from the user's perspective this is one application, but from a modeling and design point of view it may done using separate models with distinct implementations. If we can divide requirements in two or more sets which do not have much in common, then we can create separate `Bounded Context` and do the modeling independently. That is a minor integration which has to do with organizing the applications, rather than the model behind them.
+  + Before going on `Separate Ways` we need to make sure that we won't come back to an integrated system. Models developed independently are very difficult to integrate.
+
+**Open Host Service**
+
+  + When we try to integrate two subsystems, we usually create a translation layer between them. This layer acts as a buffer between the client subsystem and the external subsystem we want to integrate with. If the externam subsystem turns out to be used not by one client, but by several ones, we need to create translation layers for all of them. All those layers will repeat the same task, and will contain similar code
+  + The solution is to see the external subsystem as a provider of services. If we can wrap a set of `Services` around it, then all other subsystems will access these `Services` without any translation layer. Define a protocol that gives access to your subsystem as a set of `Services`. Open the protocol so that all who need to integrate with you can use it. Enhance and expand the protocol to handle new integration requirements, except when a single team has idiosyncratic needs. Then, use a one-off translator to augment the protocol for that special case so that the shared protocol can stay simple and coherent.
 
 **Distillation**
